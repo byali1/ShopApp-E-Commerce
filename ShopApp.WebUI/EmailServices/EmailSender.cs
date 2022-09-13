@@ -18,7 +18,7 @@ namespace ShopApp.WebUI.EmailServices
             var client = new SendGridClient(sendGridKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("unknown.shra@gmail.com", "Shop App"),
+                From = new EmailAddress("byali.ilgin@gmail.com", "Shop App"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
