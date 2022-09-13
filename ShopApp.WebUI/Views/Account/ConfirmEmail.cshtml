@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "ConfirmEmail";
+}
+
+
+<div class="row">
+    <div class="text-center">
+        <h1 class="text-center"><i class="bi bi-person-check-fill text-warning"></i> E-mail Onayı</h1>
+        <hr />
+    </div>
+    
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>
+
+            @if (TempData["message"] != null)
+            {
+                @TempData["message"]
+            }
+        </strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+</div>
+
+
+
+

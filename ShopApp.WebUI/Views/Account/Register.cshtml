@@ -1,0 +1,91 @@
+﻿@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+@section Scripts{
+    @*Sayfa refresh olmadan validation'ın yapılması için*@
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+    <div class="row justify-content-center">
+        <div class="text-center col-md-6">
+            <h1 class="text-center"><i class="bi bi-box-arrow-in-right text-info"></i> Kayıt</h1>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-10">
+
+                    @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="row text-center mb-3">
+                        <div class="text-danger"><i class="bi bi-x-circle-fill text-danger"></i> @ViewBag.ErrorMessage</div>
+                    </div>
+                }
+
+
+                <form asp-controller="Account" asp-action="Register" method="post" class="d-grid gap-4">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="form-group row">
+                        <label asp-for="FullName" class="col-md-3 col-form-label">Ad Soyad</label>
+                        <div class="col-md-9">
+                            <input class="form-control" asp-for="FullName" value="@Model.FullName" />
+                            @*<span asp-validation-for="FullName" class="text-danger"></span> *@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="Username" class="col-md-3 col-form-label">Kullanıcı adı</label>
+                        <div class="col-md-9">
+                            <input class="form-control" asp-for="Username" value="@Model.Username" />
+                            @*<span asp-validation-for="Username" class="text-danger"></span>*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="Email" class="col-md-3 col-form-label">Email</label>
+                        <div class="col-md-9">
+                            <input class="form-control" asp-for="Email" value="@Model.Email" />
+                            @*<span asp-validation-for="Email" class="text-danger"></span>*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="Password" class="col-md-3 col-form-label">Şifre</label>
+                        <div class="col-md-9">
+                            <input class="form-control" asp-for="Password" value="@Model.Password" />
+                            @*<span asp-validation-for="Password" class="text-danger"></span>*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label asp-for="RePassword" class="col-md-3 col-form-label">Şifre Tekrar</label>
+                        <div class="col-md-9">
+                            <input class="form-control" asp-for="RePassword" value="@Model.RePassword" />
+                            @*<span asp-validation-for="RePassword" class="text-danger"></span>*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="d-grid col-5 mx-auto">
+                            <button type="submit" class="btn btn-info mt-4 ">Kaydı Tamamla</button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+
+            @*<div class="col-md-6">
+
+            </div>*@
+        </div>
+    </div>
+</div>
+
+

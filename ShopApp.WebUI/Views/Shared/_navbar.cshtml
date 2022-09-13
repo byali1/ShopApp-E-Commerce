@@ -1,0 +1,114 @@
+﻿
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+    <div class="container-fluid">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarShopApp" aria-controls="navbarShopApp" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">ShopApp</a>
+
+        <div class="collapse navbar-collapse" id="navbarShopApp">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="Index" class="nav-link active" aria-current="page">Ana Sayfa</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-controller="Shop" asp-action="List" class="nav-link">Tüm Ürünler</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-info" asp-controller="Cart" asp-action="Index">Sepet <i class="bi bi-cart"></i></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Cart" asp-action="GetOrders"><span class="badge text-bg-success fs-7 fw-bold">Siparişlerim</span></a>
+                    </li>
+
+                   @if (User.IsInRole("admin"))
+                   {
+                       <li class="nav-item">
+                           <a asp-controller="Admin" asp-action="CreateProduct" class="nav-link text-warning">Ürün Ekle</a>
+                       </li>
+
+                       <li class="nav-item">
+                           <a class="nav-link text-warning" asp-controller="Admin" asp-action="ProductList">Ürün Yönetimi</a>
+                       </li>
+
+                       <li class="nav-item">
+                           <a class="nav-link text-warning"asp-controller="Admin" asp-action="CreateCategory">Kategori Ekle</a>
+                       </li>
+
+                       <li class="nav-item">
+                           <a class="nav-link text-warning" asp-controller="Admin" asp-action="CategoryList">Kategori Yönetimi</a>
+                       </li>
+                   }
+                    
+                }
+                else
+                {
+                    <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Index" class="nav-link active" aria-current="page">Ana Sayfa</a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-controller="Shop" asp-action="List" class="nav-link">Tüm Ürünler</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="#">Sepet <i class="bi bi-cart"></i></a>
+                </li>
+
+                
+                }
+
+                
+
+               
+
+            </ul>
+            
+            <ul class="navbar-nav ml-auto pe-4">
+                
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" asp-controller="Account" asp-action="Manage">
+                            @User.Identity.Name
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" asp-controller="Account" asp-action="Logout"><i class="bi bi-box-arrow-right text-white"></i></a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">Giriş Yap</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Register">Üye Ol</a>
+                    </li>
+                }
+                
+            </ul>
+
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Ara" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
+
+        </div>
+
+    </div>
+
+</nav>

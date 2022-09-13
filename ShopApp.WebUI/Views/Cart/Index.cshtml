@@ -1,0 +1,139 @@
+﻿@model CartModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (Model.CartItems.Count > 0)
+{
+    <h1 class="mb-4"><i class="bi bi-cart3"></i> Sepetiniz</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr class="table-light">
+                        <th></th>
+                        <th>Ürün</th>
+                        <th>Fiyat</th>
+                        <th>Miktar</th>
+                        <th>Toplam</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+
+                <tbody class="table-group-divider ">
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <tr class="table-light">
+                            <td>
+                                <img src="img/@item.ImageUrl" width="100" />
+                            </td>
+                            <td>@item.Name</td>
+                            <td>@item.Price.ToString("c")</td>
+                            <td>
+                                @item.Quantity
+                            </td>
+                            <td>@((item.Quantity*item.Price).ToString("c"))</td>
+                            <td>
+                                <form asp-controller="Cart" asp-action="DeleteItemFromCart" method="post">
+                                    <input type="hidden" name="productId" value="@item.ProductId"/>
+                                    <button  name="deleteItem" type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-times fa-fw"></i>
+                                    </button>
+                                    
+
+                                </form>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="col-md-4">
+            <div class="text-left">
+                    <h4>Sepet Özeti</h4>
+
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>Toplam:</th>
+                            <td>@Model.TotalPrice().ToString("c")</td>
+                        </tr>
+                        <tr>
+                            <th>Kargo:</th>
+                            <td>Hepsijet</td>
+                        </tr>
+                        
+                        <tr>
+                            <th>Teslimat Tipi:</th>
+                            <td><img src="https://www.pngitem.com/pimgs/m/116-1161536_label-premium-quality-logo-png-transparent-png.png" width="30"/> (Ertesi gün teslimat)</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+               
+                <div class="text-center">
+                    <a href="/" class="btn btn-primary">
+                        <i class="fa fa-arrow-circle-left fa-fw"></i> Alışverişe devam et
+                    </a>
+                    
+                    <a asp-controller="Cart" asp-action="Checkout" class="btn btn-success">Ödeme yap
+                        <i class="fa fa-arrow-circle-right fa-fw"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+else
+{
+
+    <h1 class="mb-4"><i class="bi bi-cart3"></i> Sepetiniz</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                <tr class="table-light">
+                </tr>
+
+                </thead>
+
+                <tbody class="table-group-divider ">
+                    
+                <tr class="table-light">
+                    <td>
+                        <div class="text-center">
+                            <div class="alert text-center">
+                                <i class="bi bi-x-circle-fill text-danger" style="font-size: 50px"></i>
+                                <p class="text-muted fs-5">Sepetinizde ürün bulunmuyor.</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                    
+                </tbody>
+
+            </table>
+            
+            <p class="text-center text-muted fs-5 mb-3">Sepetin boş ama alınmayı bekleyen milyonlarca ürün seni bekliyor!</p>
+            <div class="text-center">
+                <a href="/" class="btn btn-warning">
+                    <i class="fa fa-arrow-circle-left fa-fw"></i> Sepetini doldur
+                </a>
+                    
+            </div>
+        </div>
+        
+        
+    </div>
+    
+}
+
+
+

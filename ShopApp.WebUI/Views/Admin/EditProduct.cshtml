@@ -1,0 +1,110 @@
+﻿@model ProductModel
+
+@{
+    ViewData["Title"] = "EditProduct";
+    var counter = 0;
+}
+
+@section Scripts{
+    @*Sayfa refresh olmadan validation'ın yapılması için*@
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" ></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js" ></script>
+    <script src="https://cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+
+
+    <script>
+        CKEDITOR.replace("editor");
+    </script>
+
+}
+
+<form asp-controller="Admin" asp-action="EditProduct" class="d-grid gap-4" method="post" enctype="multipart/form-data">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="row">
+        <div class="col-md-6 ">
+            <h2 class="text-center"><i class="bi bi-pencil-fill text-warning"></i> Ürün Güncelleme </h2>
+            <hr/>
+
+
+            <input type="hidden" name="Id" value="@Model.Id"/>
+
+            <div class="form-group row mb-3">
+                <label asp-for="Name" class="col-md-3 col-form-label">Ürün adı</label>
+                <div class="col-md-9">
+                    <input class="form-control" asp-for="Name" value="@Model.Name"/>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label asp-for="ImageUrl" class="col-md-3 col-form-label">Fotoğraf URL</label>
+                <div class="col-md-9">
+                    <input type="hidden" name="ImageUrl" value="@Model.ImageUrl"/>
+
+                    <img src="/img/@Model.ImageUrl" width="80"/> @*Var olan resim*@
+
+                    <input type="file" name="file" value=""/>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label asp-for="Description" class="col-md-3 col-form-label">Ürün açıklaması</label>
+                <div class="col-md-9">
+                    <textarea id="editor" asp-for="Description" class="form-control">@Model.Description</textarea>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label asp-for="Price" class="col-md-3 col-form-label">Fiyat</label>
+                <div class="col-md-9">
+                    <input class="form-control" asp-for="Price" value="@Model.Price"/>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <h2 class="text-center"><i class="bi bi-pencil-fill text-primary"></i> Ürün Kategorisi Güncelleme </h2>
+            <hr/>
+
+            @foreach (var item in (List<Category>) ViewBag.Categories)
+            {
+                var isChecked = "";
+
+                if (Model.SelectedCategories.Any(i => i.Id == item.Id))
+                {
+                    isChecked = "checked";
+
+                    <input type="hidden" name="SelectedCategories[@counter].Id" value="@item.Id"/>
+                    <input type="hidden" name="SelectedCategories[@counter].Name" value="@item.Name"/>
+                    counter++;
+
+
+                }
+                else
+                {
+                    isChecked = "";
+                }
+
+                <div class="form-check">
+
+                    <input class="form-check-input" type="checkbox" value="@item.Id" name="categoryIds"
+                           id="category@(item.Id)" @isChecked>
+
+                    <label class="form-check-label" for="category@(item.Id)">
+                        @item.Name
+                    </label>
+                </div>
+
+            }
+        </div>
+
+        <div class="form-group row">
+            <div class="d-grid col-3 mx-auto">
+                <button type="submit" class="btn btn-warning mt-4 ">Onayla</button>
+            </div>
+        </div>
+    </div>
+
+</form>

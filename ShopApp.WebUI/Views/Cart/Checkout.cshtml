@@ -1,0 +1,148 @@
+﻿@model OrderModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h1 class="text-center"><strong>Ödeme</strong></h1>
+
+<div class="row">
+    <div class="col-md-8">
+
+        <h4 class="mb-3">Sipariş Detayları</h4>
+
+
+        <form action="/checkout" method="post">
+            <div class="row">
+
+                <div class="row justify-content-center">
+                    <div class="col-md-6 mb-3 ">
+                        <input asp-for="@Model.Email" class="form-control" value="" placeholder="E-mail" >
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+                    <input asp-for="@Model.FirstName" class="form-control" value="" placeholder="Ad"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input asp-for="@Model.LastName" class="form-control" value="" placeholder="Soyad"/>
+                </div>
+
+                <div class="mb-3">
+                    <textarea asp-for="@Model.Address"  class="form-control" placeholder="Teslimat adresi"></textarea>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input asp-for="@Model.City" class="form-control" value="" placeholder="Şehir"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input asp-for="@Model.Phone" class="form-control" value="" placeholder="Telefon"/>
+                </div>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="save-info">
+                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+            </div>
+
+            <hr class="mb-4"/>
+
+
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                    <label class="custom-control-label" for="credit">Credit card</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                    <label class="custom-control-label" for="eft">EFT</label>
+                </div>
+            </div>
+
+            <h5 class="mt-4">Ödeme Bilgileri</h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input asp-for="@Model.CardName" value="" class="form-control" placeholder="Kart sahibi"/>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input asp-for="@Model.CardNumber" value="" class="form-control" placeholder="Kart numarası"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <input asp-for="@Model.ExpirationMonth" value="" class="form-control" placeholder="Ay"/>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <input asp-for="@Model.ExpirationYear" value="" class="form-control" placeholder="Yıl"/>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <input asp-for="@Model.Cvv" value="" class="form-control" placeholder="CVV"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="my-3 text-center">
+                <button type="submit" class="btn btn-success btn-lg btn-block">Ödemeyi Tamamla</button>
+            </div>
+        </form>
+
+    </div>
+    
+    
+    <div class="col-md-4">
+        <h4 class="mb-3">Özet</h4>
+        <ul class="list-group mb-3">
+            
+            @foreach (var item in Model.CartModel.CartItems)
+            {
+                
+                <li class="list-group-item d-flex justify-content-between">
+                    <div>
+                        @if (@item.Quantity > 1)
+                        {
+                            <h6 class="my-0">@item.Name
+                                <span class="badge text-bg-warning ms-3">x @item.Quantity</span>
+                            </h6>
+                        }
+                        else
+                        {
+                            <h6 class="my-0">@item.Name
+                            </h6>
+                        }
+
+                       
+                    </div>
+                    <span class="text-muted">@(@item.Price * @item.Quantity)  TL</span>
+                </li>
+
+            }
+
+           
+            
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="badge text-bg-dark">Toplam:</span>
+                <strong>@Model.CartModel.TotalPrice() TL</strong>
+            </li>
+            
+            
+        </ul>
+
+        <p class="text-muted text-center fs-6">Sepetteki ürünler sana kavuşmayı bekliyor :)</p>
+
+       @* @foreach (var item in Model.CartModel.CartItems)
+        {
+
+
+            <li class="list-group-item d-flex ">
+                <div>
+                    <img  src="img/@item.ImageUrl"  width="100" />
+                </div>
+            </li>
+
+        }*@
+
+    </div>
+</div>

@@ -1,0 +1,54 @@
+﻿@model ProductListModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Ürün Yönetimi</h1>
+<hr />
+
+@if (Model.Products.Count > 0)
+{
+    
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr class="table-dark">
+            <td style="width: 40px;">Id</td>
+            <td style="width: 100px;">Image</td>
+            <td>Name</td>
+            <td style="width: 12px;">Price</td>
+            <td style="width: 150px;">Operation</td>
+        </tr>
+        </thead>
+
+
+        <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>
+                    <img src="/img/@product.ImageUrl" width="80"/>
+                </td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>
+                    <div class="text-center">
+                        <a class="btn btn-warning btn-sm text-white me-2" href="/admin/products/@product.Id">Güncelle</a>
+                        
+                        <form action="/admin/deleteproduct" method="post" style="display: inline">
+                            <input type="hidden" name="productId" value="@product.Id"/>
+                            <button type="submit" class="btn btn-danger btn-sm text-white">Sil</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <partial name="_noProduct" />
+}
+

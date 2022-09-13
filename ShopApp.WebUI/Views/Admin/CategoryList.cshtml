@@ -1,0 +1,55 @@
+﻿@model CategoryListModel
+
+@{
+    ViewData["Title"] = "CategoryList";
+}
+
+<h1>Kategori Yönetimi</h1>
+<hr/>
+
+@if (Model.Categories.Count > 0)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr class="table-dark">
+            <td style="width: 40px;">Id</td>
+            <td>Name</td>
+            <td style="width: 150px;">Operation</td>
+        </tr>
+        </thead>
+
+
+        <tbody>
+        @foreach (var category in Model.Categories)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+                <td>
+                    <div class="text-center">
+                        <a class="btn btn-warning btn-sm text-white me-2" href="/admin/editcategory/@category.Id">Güncelle</a>
+                        
+                        <form action="/admin/deletecategory" method="post" style="display: inline">
+                            <input type="hidden" name="categoryId" value="@category.Id"/>
+                            <button type="submit" class="btn btn-danger btn-sm text-white">Sil</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="row">
+        <div class="text-center">
+            <div class="alert text-center">
+                <i class="bi bi-x-circle-fill text-danger" style="font-size: 50px"></i>
+                <p class="text-muted fs-5">Kategori bulunamadı.</p>
+            </div>
+        </div>
+    </div>
+}
+
+
